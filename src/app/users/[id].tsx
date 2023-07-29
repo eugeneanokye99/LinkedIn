@@ -1,8 +1,16 @@
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import React, { useState, useLayoutEffect } from "react";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import userJson from "../../../LinkedIn Asset Bundle/data/user.json";
 import { User } from "@/types";
+import ExperienceListItem from "@/components/ExperienceListItem";
 
 export default function UserProfile() {
   const [user, setUser] = useState<User>(userJson);
@@ -14,16 +22,14 @@ export default function UserProfile() {
     console.warn("Connect pressed");
   };
 
-useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
-        title: user.name
-      })
-}, [user?.name])
-
-  
+      title: user.name,
+    });
+  }, [user?.name]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header  */}
       <View style={styles.header}>
         {/* Background Image */}
@@ -51,7 +57,13 @@ useLayoutEffect(() => {
       </View>
 
       {/* Experience */}
-    </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Experience</Text>
+        {user.experience?.map((experience) => (
+          <ExperienceListItem key={experience.id} experience={experience} />
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
@@ -59,6 +71,7 @@ const styles = StyleSheet.create({
   container: {},
   header: {
     backgroundColor: "white",
+    marginBottom: 10,
   },
   backImage: {
     width: "100%",
@@ -93,17 +106,17 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   section: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 10,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     marginVertical: 5,
   },
   paragraph: {
-   lineHeight: 20,
-   letterSpacing: 0.2,
+    lineHeight: 20,
+    letterSpacing: 0.2,
   },
 });
