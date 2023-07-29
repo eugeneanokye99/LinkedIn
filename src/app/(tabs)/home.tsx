@@ -1,14 +1,19 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import PostListItem from '@/components/PostListItem';
 import posts from '../../../LinkedIn Asset Bundle/data/posts.json'
 
-const firstPost = posts[0];
 
-export default function TabOneScreen() {
+export default function HomeFeedScreen() {
   return (
     <View style={styles.container}>
-    <PostListItem post={firstPost} />
+    <FlatList 
+    data={posts}
+    renderItem={({item}) => <PostListItem post={item} />
+    }
+    showsVerticalScrollIndicator={false}
+    contentContainerStyle={{gap: 10,}}
+    />
     </View>
   );
 }
