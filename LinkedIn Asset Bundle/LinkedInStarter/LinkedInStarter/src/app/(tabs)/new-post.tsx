@@ -1,31 +1,25 @@
-import {
-  Pressable,
-  StyleSheet,
-  TextInput,
-  Image,
-  ScrollView,
-} from "react-native";
-import { Text, View } from "@/components/Themed";
-import { useNavigation, useRouter } from "expo-router";
-import { useLayoutEffect, useState } from "react";
-import * as ImagePicker from "expo-image-picker";
-import { FontAwesome } from "@expo/vector-icons";
+import { Pressable, StyleSheet, TextInput, Image } from 'react-native';
+import { Text, View } from '@/components/Themed';
+import { useNavigation, useRouter } from 'expo-router';
+import { useLayoutEffect, useState } from 'react';
+import * as ImagePicker from 'expo-image-picker';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function NewPostScreen() {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [image, setImage] = useState<string | null>(null);
 
+  const navigation = useNavigation();
   const router = useRouter();
 
-  const navigation = useNavigation();
-
   const onPost = () => {
-    console.warn("Posting: ", content);
+    console.warn(`Posting: ${content}`);
 
-    router.push("/(tabs)/home");
-    setContent("");
-    setImage("");
+    router.push('/(tabs)/');
+    setContent('');
+    setImage(null);
   };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -41,7 +35,7 @@ export default function NewPostScreen() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      // aspect: [4, 3],
       quality: 0.5,
     });
 
@@ -53,7 +47,7 @@ export default function NewPostScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <TextInput
         value={content}
         onChangeText={setContent}
@@ -77,7 +71,7 @@ export default function NewPostScreen() {
           <FontAwesome name="glass" size={24} color="black" />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -91,31 +85,35 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
+
+  // header
   postButton: {
-    backgroundColor: "royalblue",
+    backgroundColor: 'royalblue',
     padding: 5,
-    borderRadius: 10,
     paddingHorizontal: 15,
+    borderRadius: 50,
     marginRight: 10,
   },
   postButtonText: {
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold',
   },
+
   image: {
-    width: "100%",
+    width: '100%',
     aspectRatio: 1,
-    marginTop: "auto",
+    marginTop: 'auto',
   },
+
   footer: {
-    marginTop: 400,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    marginTop: 'auto',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   iconButton: {
-    backgroundColor: "gainsboro",
+    backgroundColor: 'gainsboro',
     padding: 20,
     borderRadius: 100,
   },
