@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import React, { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import React, { useState, useLayoutEffect } from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import userJson from "../../../LinkedIn Asset Bundle/data/user.json";
 import { User } from "@/types";
 
@@ -8,10 +8,19 @@ export default function UserProfile() {
   const [user, setUser] = useState<User>(userJson);
 
   const { id } = useLocalSearchParams();
+  const navigation = useNavigation();
 
   const onConnect = () => {
     console.warn("Connect pressed");
   };
+
+useLayoutEffect(() => {
+    navigation.setOptions({
+        title: user.name
+      })
+}, [user?.name])
+
+  
 
   return (
     <View style={styles.container}>
@@ -38,7 +47,7 @@ export default function UserProfile() {
       {/* About  */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>About</Text>
-        <Text>{user.about}</Text>
+        <Text style={styles.paragraph}>{user.about}</Text>
       </View>
 
       {/* Experience */}
@@ -83,6 +92,18 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "600",
   },
-  section: {},
-  sectionTitle: {},
+  section: {
+    backgroundColor: 'white',
+    padding: 10,
+    marginVertical: 10,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginVertical: 5,
+  },
+  paragraph: {
+   lineHeight: 20,
+   letterSpacing: 0.2,
+  },
 });
