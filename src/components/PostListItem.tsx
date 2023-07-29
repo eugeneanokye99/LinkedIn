@@ -6,12 +6,18 @@ import { FontAwesome } from "@expo/vector-icons";
 type PostListItemProps = {
   post: Post;
 };
+type FooterButtonProp = {
+  text: string;
+  icon: React.ComponentProps<typeof FontAwesome>["name"];
+};
 
-function FooterButton({text, icon}) {
+function FooterButton({ text, icon }: FooterButtonProp) {
   return (
     <View style={{ flexDirection: "row" }}>
       <FontAwesome name={icon} size={16} color="gray" />
-      <Text style={{marginLeft: 5, color: "gray", fontWeight: 500}}>{text}</Text>
+      <Text style={{ marginLeft: 5, color: "gray", fontWeight: 500 }}>
+        {text}
+      </Text>
     </View>
   );
 }
@@ -81,6 +87,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     justifyContent: "space-around",
     borderTopWidth: 1,
-    borderColor: 'lightgray',
+    borderColor: "lightgray",
   },
 });
